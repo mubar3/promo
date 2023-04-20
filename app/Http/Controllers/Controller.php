@@ -36,12 +36,14 @@ class Controller extends BaseController
                 }
             }
             $query=Prom::where('status','y');
+            $query->where('kuota','>',0)->orwhere('kuota','!=','unl');
             if($query1->id == 1){
                 $query=$query->where('istimewa','y');
             }else{
                 $query=$query->where('istimewa','n');
             }
             $query=$query->inRandomOrder()->first();
+            // return $query;
             if(!$query){
                 return response()->json(['status'=>false]);
             }
@@ -51,8 +53,16 @@ class Controller extends BaseController
             Reco::create([
                 'proms_id' => $query->id
             ]);
+            $promo=$query->promo;
+            if($query->kuota == 0){
+                return response()->json(['status'=>false]);
+            }
+            if($query->kuota != 'unl'){
+                $query->update(['kuota' => (int)$query->kuota - 1]);
+            }
+
             DB::commit();
-            return response()->json(['status'=>true,'message'=>$query->promo]);
+            return response()->json(['status'=>true,'message'=>$promo]);
                 
         } catch (Exception $e) {
             DB::rollBack();
@@ -114,6 +124,9 @@ class Controller extends BaseController
     {
         $validator = Validator::make($data->all(),[
             'promo' => 'required',
+            'jenis' => 'required',
+            'jenis_promo' => 'required',
+            'kuota' => 'required',
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false]);
@@ -123,12 +136,14 @@ class Controller extends BaseController
             Prom::create([
                 'promo' => $data->promo,
                 'jenis' => $data->jenis_promo,
+                'kuota' => $data->kuota,
             ]);
         }else if($data->jenis == 'istimewa'){
             Prom::create([
                 'promo' => $data->promo,
                 'istimewa' => 'y',
                 'jenis' => $data->jenis_promo,
+                'kuota' => $data->kuota,
             ]);
         }else{
             return 'salah jenis';

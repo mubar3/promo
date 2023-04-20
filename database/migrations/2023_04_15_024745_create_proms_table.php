@@ -19,6 +19,7 @@ class CreatePromsTable extends Migration
             $table->enum('jenis',['y','n'])->default('y');
             $table->enum('status',['y','n'])->default('y');
             $table->enum('istimewa',['y','n'])->default('n');
+            $table->string('kuota');
             $table->timestamps();
         });
     }
