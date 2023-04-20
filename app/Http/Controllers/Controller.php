@@ -23,7 +23,7 @@ class Controller extends BaseController
             'pass' => 'required'
         ]);
         if($validator->fails()){
-            return response()->json(['status'=>false]);
+            return response()->json(['status'=>false,'pass'=>true]);
         }
 
         DB::beginTransaction();
