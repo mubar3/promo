@@ -138,6 +138,22 @@ class Controller extends BaseController
         return 'sukses';
     }
 
+    public function get_promo()
+    {
+        return Prom::all();
+    }
+
+    public function delete_promo($id)
+    {
+        $cek=Prom::find($id);
+        if($cek){
+            $cek->delete();
+            return 'sukses';
+        }else{
+            return 'gagal';
+        }
+    }
+
     public function get_pass()
     {
         return Pasw::all();

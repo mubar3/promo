@@ -23,3 +23,6 @@ Route::get('/add_istimewa/{id}', [App\Http\Controllers\Controller::class, 'add_i
 Route::get('/add_biasa/{id}', [App\Http\Controllers\Controller::class, 'add_biasa']);
 Route::get('/get_pass212', [App\Http\Controllers\Controller::class, 'get_pass']);
 Route::post('/add_promo', [App\Http\Controllers\Controller::class, 'add_promo']);
+Route::get('/promo', [App\Http\Controllers\Controller::class, 'get_promo']);
+Route::delete('/promo/{delete}', [App\Http\Controllers\Controller::class, 'delete_promo']);
+
