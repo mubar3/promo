@@ -33,23 +33,37 @@
                 <div class="mb-3">
                     <button id="send" type="submit" class="btn btn-primary">Input</button>
                 </div>
-                
+                <div id="gagal">
+                    <img src="{{ asset('/gif/gagal.gif') }}">
+                </div>
+                <div id="sukses">
+                    <img src="{{ asset('/gif/sukses.gif') }}">
+                </div>
                 <div class="alert" role="alert"></div>
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" crossorigin="anonymous"></script>
         <script>
+            function reset_gif(){
+                document.getElementById("gagal").style.display = "none"
+                document.getElementById("sukses").style.display = "none"
+                $('.alert').removeClass('alert-success')
+                $('.alert').removeClass('alert-danger')
+            }
             $(function () {
                 $(document).ready(function () {
+                    reset_gif()
                     $('#fileUploadForm1').ajaxForm({ 
                         complete: function (xhr) {
+                            reset_gif()
                             var hasil=xhr.responseJSON.status;
-                            console.log(xhr)
                             if(hasil){
-                                $('.alert').addClass('alert-success').html(xhr.responseJSON.message);
+                                document.getElementById("sukses").style.display = "block"
+                                $('.alert').addClass('alert-success').html('horeee, '+xhr.responseJSON.message);
                             }else{
-                                $('.alert').addClass('alert-danger').html("Gagal, bisa ulangi dipembelian selanjutnya");
+                                document.getElementById("gagal").style.display = "block"
+                                $('.alert').addClass('alert-danger').html("Maaf hadiah sedang tidak berpihak, bisa ulangi dipembelian selanjutnya");
                             }
                             document.getElementById("pass").value = null;
                         }

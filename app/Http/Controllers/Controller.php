@@ -45,6 +45,9 @@ class Controller extends BaseController
             if(!$query){
                 return response()->json(['status'=>false]);
             }
+            if($query->jenis == 'n'){
+                return response()->json(['status'=>false]);
+            }
             Reco::create([
                 'proms_id' => $query->id
             ]);
@@ -60,7 +63,7 @@ class Controller extends BaseController
     public function add_istimewa($data)
     {
         $cek1=Pasw::find(2);
-        if($data){
+        if($cek1){
             if($cek1->password_text == $data){
                 return 'pass duplikat';
             }
@@ -85,7 +88,7 @@ class Controller extends BaseController
     public function add_biasa($data)
     {
         $cek1=Pasw::find(1);
-        if($data){
+        if($cek1){
             if($cek1->password_text == $data){
                 return 'pass duplikat';
             }
@@ -111,7 +114,8 @@ class Controller extends BaseController
     {
         $validator = Validator::make($data->all(),[
             'jenis' => 'required',
-            'promo' => 'required'
+            'promo' => 'required',
+            'jenis_promo' => 'required'
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false]);
@@ -120,11 +124,13 @@ class Controller extends BaseController
         if($data->jenis == 'biasa'){
             Prom::create([
                 'promo' => $data->promo,
+                'jenis' => $data->jenis_promo,
             ]);
         }else if($data->jenis == 'istimewa'){
             Prom::create([
                 'promo' => $data->promo,
                 'istimewa' => 'y',
+                'jenis' => $data->jenis_promo,
             ]);
         }else{
             return 'salah jenis';
