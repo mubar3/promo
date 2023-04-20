@@ -62,6 +62,11 @@
                                 document.getElementById("sukses").style.display = "block"
                                 $('.alert').addClass('alert-success').html('horeee, '+xhr.responseJSON.message);
                             }else{
+                                if(eval(xhr.responseJSON.pass)){
+                                    $('.alert').addClass('alert-danger').html("Password salah");
+                                    document.getElementById("pass").value = null;
+                                    return
+                                }
                                 document.getElementById("gagal").style.display = "block"
                                 $('.alert').addClass('alert-danger').html("Maaf hadiah sedang tidak berpihak, bisa ulangi dipembelian selanjutnya");
                             }

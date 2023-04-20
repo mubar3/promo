@@ -32,7 +32,7 @@ class Controller extends BaseController
             if(!$query1){
                 $query1=Pasw::where('password',$this->encryptHash($data->pass,112))->first();
                 if(!$query1){
-                    return response()->json(['status'=>false]);
+                    return response()->json(['status'=>false,'pass'=>true]);
                 }
             }
             $query=Prom::where('status','y');
