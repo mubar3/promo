@@ -24,5 +24,6 @@ Route::get('/add_biasa/{id}', [App\Http\Controllers\Controller::class, 'add_bias
 Route::get('/get_pass212', [App\Http\Controllers\Controller::class, 'get_pass']);
 Route::post('/add_promo', [App\Http\Controllers\Controller::class, 'add_promo']);
 Route::get('/promo', [App\Http\Controllers\Controller::class, 'get_promo']);
+Route::post('/promo', [App\Http\Controllers\Controller::class, 'edit_promo']);
 Route::delete('/promo/{delete}', [App\Http\Controllers\Controller::class, 'delete_promo']);
 

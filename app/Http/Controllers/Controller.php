@@ -113,14 +113,12 @@ class Controller extends BaseController
     public function add_promo(Request $data)
     {
         $validator = Validator::make($data->all(),[
-            'jenis' => 'required',
             'promo' => 'required',
-            'jenis_promo' => 'required'
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false]);
         }
-
+        $promo=json_decode($data->osa,true);
         if($data->jenis == 'biasa'){
             Prom::create([
                 'promo' => $data->promo,
@@ -134,6 +132,22 @@ class Controller extends BaseController
             ]);
         }else{
             return 'salah jenis';
+        }
+        return 'sukses';
+    }
+
+    public function edit_promo(Request $data)
+    {
+        $validator = Validator::make($data->all(),[
+            'promo' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false]);
+        }
+        $promo=json_decode($data->promo,true);
+        foreach ($promo as $key) {
+            // return $key['id'];
+            Prom::find($key['id'])->update($key);
         }
         return 'sukses';
     }
